@@ -1,2 +1,5 @@
-def play_game(player):
+from player import Player
+
+
+def play_game(player:Player):
     pass

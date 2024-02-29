@@ -1,9 +1,9 @@
 class Player():
-    def __init__(self, name, money):
+    def __init__(self, name:str, money:float):
         self.name = name
         self.money = float(money)
 
-    def adjust_money(self, amount_to_adjust):
+    def adjust_money(self, amount_to_adjust:float):
         '''Adjust class objects money variable by the given "amount_to_adjust" variable when called'''
         self.money += amount_to_adjust
 

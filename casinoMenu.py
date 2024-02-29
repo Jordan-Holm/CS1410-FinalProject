@@ -10,8 +10,5 @@ def create_player():
         
     return Player(name, 100)
 
-def test():
-    pass
-
 if __name__ == "__main__":
     main()
