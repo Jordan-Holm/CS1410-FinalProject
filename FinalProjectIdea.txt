@@ -1,0 +1,11 @@
+CHANGE YOUR NAME TO MINE
+  
+  I'll be working on a casino game with Porter Jordan.
+In our game you'll create a player with a base of $100
+to start out. From there you'll be directed to a menu 
+where you can choose which game you'd like to play.
+There will be Blackjack, a slot machine, and a simple
+coin flip game. If required or we're able to, we can 
+add even more games. At the start of each game you'll
+make a bet and depending on the outcome the player's
+money will be adjusted accordingly
