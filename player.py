@@ -9,7 +9,7 @@ class Player():
 
     def show_money(self):
         '''Displays the class object current money amount. Formated to 2 decimal places'''
-        return f"${self.money:.2f}"
+        print(f"${self.money:.2f}")
 
     def __str__(self):
         return f"{self.name}: {self.show_money()}"
