@@ -80,9 +80,9 @@ def play_game(player:Player):
     dealer_hand_value = calculate_hand_total(dealer_cards)
 
     #Displays starting cards
-    print(player_cards)
+    print("Player: ", player_cards)
     print(player_hand_value)
-    print(dealer_cards)
+    print("Dealer: ", dealer_cards)
     print(dealer_hand_value)
 
     # Checks to see if the player hit blackjack (Add 3x pay out later)

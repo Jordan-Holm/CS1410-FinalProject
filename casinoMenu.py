@@ -1,5 +1,5 @@
 from player import Player
-import blackJack
+import blackJack, slotMachine
 
 def create_player():
     '''Creates a Player class object using user input for the name & a default amount of money at $100'''
@@ -8,15 +8,20 @@ def create_player():
     return Player(name, 100)
 
 def menu_choices(player:Player):
-    print("1: BlackJack\n2: Slot Machines\n3: Coin Flip\n4: View Money\n5: Quit")
 
-    player_input = input("Make a choice: ")
+    # Checks if the player still has money to even play
+    if player.money > 0:
+        print("1: BlackJack\n2: Slot Machines\n3: Coin Flip\n4: View Money\n5: Quit")
+        player_input = input("Make a choice: ")
+    else:
+        print("You're out of cash! Comeback again :)")
+        quit()
 
     match player_input:
         case "1":
             blackJack.play_game(player)
         case "2":
-            pass
+            slotMachine.play_game(player)
         case "3":
             pass
         case "4":
