@@ -1,5 +1,5 @@
 from player import Player
-#from casinoMenu import menu_choices
+from casinoMenu import menu_choices
 import random
 
 def generate_slot_nums():
@@ -21,16 +21,16 @@ def check_slot_nums(player:Player, bet:float, num1:int, num2:int, num3:int):
 def game_lose(player:Player, bet:float):
     player.adjust_money(-bet)
     print(f"You lost ${-bet}")
-    #menu_choices(player)
+    menu_choices(player)
 
 def game_win(player:Player, bet:float, modifier:int=2):
     player.adjust_money(bet * modifier)
     print(f"You won ${bet * modifier}")
-    #menu_choices(player)
+    menu_choices(player)
 
 def game_tie(player:Player, bet:float):
     print(f"your bet of ${bet} was returned")
-    #menu_choices(player)
+    menu_choices(player)
 
 def play_game(player:Player):
     bet = int(input("Place your bet: "))
