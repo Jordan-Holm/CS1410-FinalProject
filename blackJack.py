@@ -61,14 +61,10 @@ def game_tie(player:Player, bet:float):
 
 def play_game(player:Player):
     '''This method will be called in casinoMenu.py to start playing blackjack'''
+    player.set_cur_bet()
+    bet = player.get_cur_bet()
+    
     game_active = True
-    while True:
-        try:
-            bet = float(input("Place your bet: "))
-            if bet > 0:
-                break
-        except ValueError:
-            print("Bet must be a valid number")
 
     deck = generate_cards()
     player_cards = []

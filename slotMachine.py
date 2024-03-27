@@ -37,13 +37,8 @@ def game_tie(player:Player, bet:float):
     print(f"your bet of ${bet} was returned")
 
 def play_game(player:Player):
-    while True:
-        try:
-            bet = float(input("Place your bet: "))
-            if bet > 0:
-                break
-        except ValueError:
-            print("Bet must be a valid number")
+    player.set_cur_bet()
+    bet = player.get_cur_bet()
 
     num1, num2, num3 = generate_slot_nums()
     print(f"{num1}-{num2}-{num3}")

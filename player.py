@@ -2,6 +2,7 @@ class Player():
     def __init__(self, name:str, money:float):
         self.name = name
         self.money = float(money)
+        self.cur_bet: float
 
     def adjust_money(self, amount_to_adjust:float):
         '''Adjust class objects money variable by the given "amount_to_adjust" variable when called'''
@@ -10,6 +11,19 @@ class Player():
     def show_money(self):
         '''Displays the class object current money amount. Formated to 2 decimal places'''
         print(f"${self.money:.2f}")
+
+    def get_cur_bet(self):
+        return self.cur_bet
+
+    def set_cur_bet(self):
+        while True:
+            try:
+                bet = float(input("Place your bet: "))
+                if bet > 0:
+                    self.cur_bet = bet
+                    break
+            except ValueError:
+                print("Bet must be a valid number")
 
     def __str__(self):
         return f"{self.name}: {self.show_money()}"
