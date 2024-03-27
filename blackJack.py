@@ -52,7 +52,7 @@ def game_lose(player:Player, bet:float):
     player.adjust_money(-bet)
     print(f"You lost ${-bet}")
 
-def game_win(player:Player, bet:float, modifier:int=2):
+def game_win(player:Player, bet:float, modifier:int=1):
     player.adjust_money(bet * modifier)
     print(f"You won ${bet * modifier}")
 
@@ -61,7 +61,14 @@ def game_tie(player:Player, bet:float):
 
 def play_game(player:Player):
     '''This method will be called in casinoMenu.py to start playing blackjack'''
-    bet = int(input("Place your bet: "))
+    game_active = True
+    while True:
+        try:
+            bet = float(input("Place your bet: "))
+            if bet > 0:
+                break
+        except ValueError:
+            print("Bet must be a valid number")
 
     deck = generate_cards()
     player_cards = []
@@ -82,12 +89,14 @@ def play_game(player:Player):
     print("Dealer: ", dealer_cards)
     print(dealer_hand_value)
 
-    # Checks to see if the player hit blackjack (Add 3x pay out later)
+    # Checks to see if the player hit blackjack
     if player_hand_value == 21:
-        game_win(player, bet, 3)
+        print("BLACK JACK")
+        game_win(player, bet, 1.5)
+        game_active = False
 
     #Player's turn to hit or stand
-    while True:
+    while game_active:
         try:
             player_choice = int(input("1: Hit\n2:Stand"))
 
@@ -98,6 +107,7 @@ def play_game(player:Player):
                 print(player_hand_value)
                 if player_hand_value > 21:
                     game_lose(player, bet)
+                    game_active = False
             elif player_choice == 2:
                 break
             else:
@@ -109,7 +119,7 @@ def play_game(player:Player):
             print("Invalid input, please try again")
 
     #Dealer's turn to hit or stand
-    while True:
+    while game_active:
         if dealer_hand_value < 17:
             dealer_cards.append(deal_a_card(deck))
             print(dealer_cards)
@@ -117,13 +127,15 @@ def play_game(player:Player):
             print(dealer_hand_value)
         elif dealer_hand_value > 21:
             game_win(player, bet)
+            game_active = False
         else:
             break
 
     # Checks both hand values to determine the winner
-    if player_hand_value > dealer_hand_value:
-        game_win(player, bet)
-    elif player_hand_value < dealer_hand_value:
-        game_lose(player, bet)
-    else:
-        game_tie(player, bet)
+    if game_active:
+        if player_hand_value > dealer_hand_value and player_hand_value <= 21:
+            game_win(player, bet)
+        elif player_hand_value < dealer_hand_value :
+            game_lose(player, bet)
+        else:
+            game_tie(player, bet)
