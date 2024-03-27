@@ -1,5 +1,4 @@
 from player import Player
-from casinoMenu import menu_choices
 import random
 
 def generate_cards():
@@ -49,18 +48,16 @@ def calculate_hand_total(hand:list):
     return total
 
 def game_lose(player:Player, bet:float):
+    '''Removes money from player when they lose'''
     player.adjust_money(-bet)
     print(f"You lost ${-bet}")
-    menu_choices(player)
 
 def game_win(player:Player, bet:float, modifier:int=2):
     player.adjust_money(bet * modifier)
     print(f"You won ${bet * modifier}")
-    menu_choices(player)
 
 def game_tie(player:Player, bet:float):
     print(f"You tied, your bet of ${bet} was returned")
-    menu_choices(player)
 
 def play_game(player:Player):
     '''This method will be called in casinoMenu.py to start playing blackjack'''
@@ -91,16 +88,25 @@ def play_game(player:Player):
 
     #Player's turn to hit or stand
     while True:
-        player_choice = input("1: Hit\n2:Stand")
-        if player_choice == "1":
-            player_cards.append(deal_a_card(deck))
-            print(player_cards)
-            player_hand_value = calculate_hand_total(player_cards)
-            print(player_hand_value)
-            if player_hand_value > 21:
-                game_lose(player, bet)
-        elif player_choice == "2":
-            break
+        try:
+            player_choice = int(input("1: Hit\n2:Stand"))
+
+            if player_choice == 1:
+                player_cards.append(deal_a_card(deck))
+                print(player_cards)
+                player_hand_value = calculate_hand_total(player_cards)
+                print(player_hand_value)
+                if player_hand_value > 21:
+                    game_lose(player, bet)
+            elif player_choice == 2:
+                break
+            else:
+                print("Invalid input, please try again")
+                print(player_cards)
+                print(player_hand_value)
+                continue
+        except ValueError:
+            print("Invalid input, please try again")
 
     #Dealer's turn to hit or stand
     while True:
