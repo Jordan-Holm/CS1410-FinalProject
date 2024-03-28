@@ -22,7 +22,8 @@ def check_slot_nums(player:Player, bet:float, num1:int, num2:int, num3:int):
                 # game_win(player, bet, 10)
                 player.player_win(bet, 10)
         else:
-            game_tie(player, bet)
+            # game_tie(player, bet)
+            player.player_tie(bet)
     elif num2 == num3:
         # game_tie(player, bet)
         player.player_tie(bet)
