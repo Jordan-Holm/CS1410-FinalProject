@@ -29,6 +29,7 @@ def menu_choices(player:Player):
             menu_choices(player)
         case 3:
             pass
+            # menu_choices(player)
         case 4:
             player.show_money()
             menu_choices(player)
