@@ -1,5 +1,4 @@
 from player import Player
-from casinoMenu import menu_choices
 import random
 
 def generate_cards():
@@ -48,23 +47,12 @@ def calculate_hand_total(hand:list):
 
     return total
 
-def game_lose(player:Player, bet:float):
-    player.adjust_money(-bet)
-    print(f"You lost ${-bet}")
-    menu_choices(player)
-
-def game_win(player:Player, bet:float, modifier:int=2):
-    player.adjust_money(bet * modifier)
-    print(f"You won ${bet * modifier}")
-    menu_choices(player)
-
-def game_tie(player:Player, bet:float):
-    print(f"You tied, your bet of ${bet} was returned")
-    menu_choices(player)
-
 def play_game(player:Player):
     '''This method will be called in casinoMenu.py to start playing blackjack'''
-    bet = int(input("Place your bet: "))
+    player.set_cur_bet()
+    bet = player.get_cur_bet()
+    
+    game_active = True
 
     deck = generate_cards()
     player_cards = []
@@ -85,39 +73,53 @@ def play_game(player:Player):
     print("Dealer: ", dealer_cards)
     print(dealer_hand_value)
 
-    # Checks to see if the player hit blackjack (Add 3x pay out later)
+    # Checks to see if the player hit blackjack
     if player_hand_value == 21:
-        game_win(player, bet, 3)
+        print("BLACK JACK")
+        player.player_win(bet, 1.5)
+        game_active = False
 
     #Player's turn to hit or stand
-    while True:
-        player_choice = input("1: Hit\n2:Stand")
-        if player_choice == "1":
-            player_cards.append(deal_a_card(deck))
-            print(player_cards)
-            player_hand_value = calculate_hand_total(player_cards)
-            print(player_hand_value)
-            if player_hand_value > 21:
-                game_lose(player, bet)
-        elif player_choice == "2":
-            break
+    while game_active:
+        try:
+            player_choice = int(input("1: Hit\n2:Stand"))
+
+            if player_choice == 1:
+                player_cards.append(deal_a_card(deck))
+                print(player_cards)
+                player_hand_value = calculate_hand_total(player_cards)
+                print(player_hand_value)
+                if player_hand_value > 21:
+                    player.player_lose(bet)
+                    game_active = False
+            elif player_choice == 2:
+                break
+            else:
+                print("Invalid input, please try again")
+                print(player_cards)
+                print(player_hand_value)
+                continue
+        except ValueError:
+            print("Invalid input, please try again")
 
     #Dealer's turn to hit or stand
-    while True:
+    while game_active:
         if dealer_hand_value < 17:
             dealer_cards.append(deal_a_card(deck))
             print(dealer_cards)
             dealer_hand_value = calculate_hand_total(dealer_cards)
             print(dealer_hand_value)
         elif dealer_hand_value > 21:
-            game_win(player, bet)
+            player.player_win(bet)
+            game_active = False
         else:
             break
 
     # Checks both hand values to determine the winner
-    if player_hand_value > dealer_hand_value:
-        game_win(player, bet)
-    elif player_hand_value < dealer_hand_value:
-        game_lose(player, bet)
-    else:
-        game_tie(player, bet)
+    if game_active:
+        if player_hand_value > dealer_hand_value and player_hand_value <= 21:
+            player.player_win(bet)
+        elif player_hand_value < dealer_hand_value :
+            player.player_lose(bet)
+        else:
+            player.player_tie(bet)

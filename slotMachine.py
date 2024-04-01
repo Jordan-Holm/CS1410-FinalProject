@@ -1,5 +1,4 @@
 from player import Player
-from casinoMenu import menu_choices
 import random
 
 def generate_slot_nums():
@@ -12,28 +11,23 @@ def generate_slot_nums():
 def check_slot_nums(player:Player, bet:float, num1:int, num2:int, num3:int):
     if num1 == num2:
         if num2 == num3:
-            game_win(player, bet, 5)
+            if num1 == 1: #if the player rolls three 1s 2x multiplier
+                player.player_win(bet, 2)
+            elif num1 == 2: #if the player rolls three 2s 4x multiplier
+                player.player_win(bet, 4)
+            elif num1 == 3: #if the player rolls three 3s 10x multiplier
+                print("JACKPOT!")
+                player.player_win(bet, 10)
         else:
-            game_tie(player, bet)
+            player.player_tie(bet)
+    elif num2 == num3:
+        player.player_tie(bet)
     else:
-        game_lose(player, bet)
-
-def game_lose(player:Player, bet:float):
-    player.adjust_money(-bet)
-    print(f"You lost ${-bet}")
-    menu_choices(player)
-
-def game_win(player:Player, bet:float, modifier:int=2):
-    player.adjust_money(bet * modifier)
-    print(f"You won ${bet * modifier}")
-    menu_choices(player)
-
-def game_tie(player:Player, bet:float):
-    print(f"your bet of ${bet} was returned")
-    menu_choices(player)
+        player.player_lose(bet)
 
 def play_game(player:Player):
-    bet = int(input("Place your bet: "))
+    player.set_cur_bet()
+    bet = player.get_cur_bet()
 
     num1, num2, num3 = generate_slot_nums()
     print(f"{num1}-{num2}-{num3}")
