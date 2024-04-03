@@ -28,8 +28,8 @@ def menu_choices(player:Player):
             slotMachine.play_game(player)
             menu_choices(player)
         case 3:
-            pass
-            # menu_choices(player)
+            coinFlip.play_game(player)
+            menu_choices(player)
         case 4:
             player.show_money()
             menu_choices(player)

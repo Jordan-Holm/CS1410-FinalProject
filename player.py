@@ -19,7 +19,7 @@ class Player():
         while True:
             try:
                 bet = float(input("Place your bet: "))
-                if bet > 0:
+                if bet > 0 and bet <= self.money:
                     self.cur_bet = bet
                     break
             except ValueError:

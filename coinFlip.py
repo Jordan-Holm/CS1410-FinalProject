@@ -7,46 +7,40 @@ class Coin():
         self.guess = guess
         self.bet = bet
         
-    def cointoss(self):
-        def sign():
-            if self.coin == 1:
-                self.coin = "Heads"
-            elif self.coin == 2:
-                self.coin = "Tails"
-        def game_lose(player:Player, bet:float):
-            player.adjust_money(-bet)
-            print(f"It was {self.coin}!You lost ${-bet}.")
+    def sign(self):
+        if self.coin == 1:
+            self.coin = "Heads"
+        elif self.coin == 2:
+            self.coin = "Tails"
 
-        def game_win(player:Player, bet:float):
-            player.adjust_money(bet)
-            print(f"It was {self.coin}! You won ${bet}!")
+        if self.guess == 1:
+            self.guess = "Heads"
+        elif self.guess == 2:
+            self.guess = "Tails"
+        
+    def game_results(self, player: Player):
+        self.sign()
+
+        print(f"your guess: {self.guess}")
+        print(f"Coin Result: {self.coin}")
+
+        if self.guess == self.coin:
+            player.player_win(self.bet)
+        
+        elif self.guess != self.coin:
+            player.player_lose(self.bet)
             
-        def game_results():
-            if self.guess == self.coin:
-                sign()
-                game_win()
-            
-            elif self.guess != self.coin:
-                sign()
-                game_lose()
-            
-def main():
+def play_game(player: Player):
     player.set_cur_bet()
     bet = player.get_cur_bet()
     
-    guess = int(input('1.Heads\n2.Tails\nHeads or Tails? Type a number. ' ))
-    try:
-        guess == 1 or 2 
-    except ValueError as e:
-        print(e)
+    while True:
+        try:
+            guess = int(input('1.Heads\n2.Tails\nHeads or Tails? Type a number. ' ))
+            if guess == 1 or guess == 2:
+                break
+        except ValueError:
+            print("Invalid option")
         
     coin = Coin(random.randint(1,2), guess, bet)
-    coin.cointoss()
-      
-    
-    
-if __name__ == "__main__":
-    main()
-        
-            
-        
+    coin.game_results(player)
