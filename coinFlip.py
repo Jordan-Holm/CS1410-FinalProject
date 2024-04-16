@@ -1,7 +1,7 @@
 from player import Player
 import random
 
-class Coin():
+class CoinFlipScreen():
     def __init__(self, coin, guess, bet):
         self.coin = coin
         self.guess = guess
@@ -42,5 +42,5 @@ def play_game(player: Player):
         except ValueError:
             print("Invalid option")
         
-    coin = Coin(random.randint(1,2), guess, bet)
+    coin = CoinFlipScreen(random.randint(1,2), guess, bet)
     coin.game_results(player)

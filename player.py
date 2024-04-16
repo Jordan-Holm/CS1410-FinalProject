@@ -1,8 +1,14 @@
-class Player():
-    def __init__(self, name:str, money:float):
-        self.name = name
-        self.money = float(money)
+from kivy.uix.screenmanager import Screen
+from kivy.core.window import Window
+from kivy.app import App
+
+class Player(Screen):
+    def __init__(self, **kwargs):
+        self.name = ""
+        self.money: float = 100
         self.cur_bet: float
+        super().__init__(**kwargs)
+        Window.bind(on_key_down = self._keydown)
 
     def adjust_money(self, amount_to_adjust:float):
         '''Adjust class objects money variable by the given "amount_to_adjust" variable when called'''
@@ -24,6 +30,20 @@ class Player():
                     break
             except ValueError:
                 print("Bet must be a valid number")
+
+    def _keydown(self, *args):
+        print(f"Key down {args[3]}")
+        # sleep(0.0001)
+        name = self.ids.name_input.text
+        if name == "":
+            print("Need information")
+        else:
+            create_player = self.ids.create_player
+            create_player.disabled = False
+
+    def on_click(self):
+        self.name = self.ids.name_input.text
+        App.get_running_app().root.current = "MainMenu"
 
     def player_win(self, bet, modifier=1):
         '''Adds money to player's money based on modifier'''

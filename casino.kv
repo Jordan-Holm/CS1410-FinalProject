@@ -1,0 +1,87 @@
+#:kivy 1.0.9
+<Label>:
+    canvas.before:
+        Color: 
+            rgba: (250/255, 17/255, 0, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    font_size: 25
+<SystemManager>
+    Player:
+        name: "CreatePlayer"
+    MainMenuScreen:
+        name: "MainMenu"
+    PlaceBetScreen:
+        name: "PlaceBet"
+    SlotScreen:
+        name: "Slot"
+    BlackJackScreen:
+        name: "BlackJack"
+
+<MainMenuScreen>
+    canvas.before:
+        Color:
+            rgba: 0,1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: 50
+        spacing: 20
+        BoxLayout:
+            Label:
+                size_hint_x: 1
+                text: "PJ'S Casino"
+        BoxLayout:
+            orientation: "vertical"
+            GridLayout:
+                cols: 2
+                id: gametable
+                size_hint_y: 9
+                Button:
+                    size_hint_y: 1
+                    text: "Play Game"
+                    on_press: root.go_to_add()
+
+
+<Player>
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: 50
+        spacing: 20
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: 2
+            spacing: 5
+            BoxLayout:
+                Label:
+                    size_hint_x: 1
+                    text: "PJ'S Casino"
+            BoxLayout:
+                Label:
+                    size_hint_x: 1
+                    text: "Name:"
+                TextInput:
+                    size_hint_x: 1.5
+                    id: name_input
+                    text: ""
+        
+        Button:
+            size_hint_y: 1
+            background_normal: ''
+            background_color: (252/255, 3/255, 78/255, 1)
+            disabled: True
+            id: create_player
+            font_size: 45
+            text: "Create Player"
+            on_press: root.on_click()

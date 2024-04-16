@@ -1,125 +1,131 @@
 from player import Player
 import random
+from kivy.uix.screenmanager import Screen
 
-def generate_cards():
-    '''Generates a deck of cards, 1 of each card value for each suit'''
-    suits = ["Hearts", "Diamonds", "Spades", "Clubs"]
-    card_values = ["A", 2, 3, 4, 5, 6,7, 8, 9, 10, "J", "Q", "K"]
+class BlackJackScreen(Screen):
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        self.game_name = "Black Jack"
 
-    all_cards = []
-    for suit in suits:
-        for card in card_values:
-            all_cards.append((suit, card))
+    def generate_cards():
+        '''Generates a deck of cards, 1 of each card value for each suit'''
+        suits = ["Hearts", "Diamonds", "Spades", "Clubs"]
+        card_values = ["A", 2, 3, 4, 5, 6,7, 8, 9, 10, "J", "Q", "K"]
 
-    return all_cards
+        all_cards = []
+        for suit in suits:
+            for card in card_values:
+                all_cards.append((suit, card))
 
-def deal_a_card(deck:list):
-    '''Randomly picks a card from the deck, removes it so it can't be played twice, then returns that card'''
-    card = random.choice(deck)
-    deck.remove(card)
+        return all_cards
 
-    return card
+    def deal_a_card(deck:list):
+        '''Randomly picks a card from the deck, removes it so it can't be played twice, then returns that card'''
+        card = random.choice(deck)
+        deck.remove(card)
 
-def calculate_hand_total(hand:list):
-    '''Verifies each character value card is assigned an integer value'''
-    total = 0
-    value = 0
+        return card
 
-    # Goes through each card value to assign proper values to str data types
-    for i in hand:
-        if i[1] == "J" or i[1] == "Q" or i[1] == "K" :
-            value = 10
-        elif i[1] == "A":
-            value = 11
-        else:
-            value = i[1]
+    def calculate_hand_total(hand:list):
+        '''Verifies each character value card is assigned an integer value'''
+        total = 0
+        value = 0
 
-        total += value
-
-    # Checks to see if the player has an ace in their hand when they went over 21, if they do it'll switch it's value to 1 instead of 11
-    if total > 21:
+        # Goes through each card value to assign proper values to str data types
         for i in hand:
-            if i[1] == "A":
-                total -= 11
-                total += 1
-                if total < 21:
-                    break
-
-    return total
-
-def play_game(player:Player):
-    '''This method will be called in casinoMenu.py to start playing blackjack'''
-    player.set_cur_bet()
-    bet = player.get_cur_bet()
-    
-    game_active = True
-
-    deck = generate_cards()
-    player_cards = []
-    player_hand_value = 0
-    dealer_cards = []
-    dealer_hand_value = 0
-
-    # Deals starting cards out
-    player_cards.append(deal_a_card(deck))
-    dealer_cards.append(deal_a_card(deck))
-    player_cards.append(deal_a_card(deck))
-    player_hand_value = calculate_hand_total(player_cards)
-    dealer_hand_value = calculate_hand_total(dealer_cards)
-
-    #Displays starting cards
-    print("Player: ", player_cards)
-    print(player_hand_value)
-    print("Dealer: ", dealer_cards)
-    print(dealer_hand_value)
-
-    # Checks to see if the player hit blackjack
-    if player_hand_value == 21:
-        print("BLACK JACK")
-        player.player_win(bet, 1.5)
-        game_active = False
-
-    #Player's turn to hit or stand
-    while game_active:
-        try:
-            player_choice = int(input("1: Hit\n2:Stand"))
-
-            if player_choice == 1:
-                player_cards.append(deal_a_card(deck))
-                print(player_cards)
-                player_hand_value = calculate_hand_total(player_cards)
-                print(player_hand_value)
-                if player_hand_value > 21:
-                    player.player_lose(bet)
-                    game_active = False
-            elif player_choice == 2:
-                break
+            if i[1] == "J" or i[1] == "Q" or i[1] == "K" :
+                value = 10
+            elif i[1] == "A":
+                value = 11
             else:
-                print("Invalid input, please try again")
-                print(player_cards)
-                print(player_hand_value)
-                continue
-        except ValueError:
-            print("Invalid input, please try again")
+                value = i[1]
 
-    #Dealer's turn to hit or stand
-    while game_active:
-        if dealer_hand_value < 17:
-            dealer_cards.append(deal_a_card(deck))
-            print(dealer_cards)
-            dealer_hand_value = calculate_hand_total(dealer_cards)
-            print(dealer_hand_value)
-        elif dealer_hand_value > 21:
-            player.player_win(bet)
+            total += value
+
+        # Checks to see if the player has an ace in their hand when they went over 21, if they do it'll switch it's value to 1 instead of 11
+        if total > 21:
+            for i in hand:
+                if i[1] == "A":
+                    total -= 11
+                    total += 1
+                    if total < 21:
+                        break
+
+        return total
+
+    def play_game(self, player:Player):
+        '''This method will be called in casinoMenu.py to start playing blackjack'''
+        player.set_cur_bet()
+        bet = player.get_cur_bet()
+        
+        game_active = True
+
+        deck = self.generate_cards()
+        player_cards = []
+        player_hand_value = 0
+        dealer_cards = []
+        dealer_hand_value = 0
+
+        # Deals starting cards out
+        player_cards.append(self.deal_a_card(deck))
+        dealer_cards.append(self.deal_a_card(deck))
+        player_cards.append(self.deal_a_card(deck))
+        player_hand_value = self.calculate_hand_total(player_cards)
+        dealer_hand_value = self.calculate_hand_total(dealer_cards)
+
+        #Displays starting cards
+        print("Player: ", player_cards)
+        print(player_hand_value)
+        print("Dealer: ", dealer_cards)
+        print(dealer_hand_value)
+
+        # Checks to see if the player hit blackjack
+        if player_hand_value == 21:
+            print("BLACK JACK")
+            player.player_win(bet, 1.5)
             game_active = False
-        else:
-            break
 
-    # Checks both hand values to determine the winner
-    if game_active:
-        if player_hand_value > dealer_hand_value and player_hand_value <= 21:
-            player.player_win(bet)
-        elif player_hand_value < dealer_hand_value :
-            player.player_lose(bet)
-        else:
-            player.player_tie(bet)
+        #Player's turn to hit or stand
+        while game_active:
+            try:
+                player_choice = int(input("1: Hit\n2:Stand"))
+
+                if player_choice == 1:
+                    player_cards.append(self.deal_a_card(deck))
+                    print(player_cards)
+                    player_hand_value = self.calculate_hand_total(player_cards)
+                    print(player_hand_value)
+                    if player_hand_value > 21:
+                        player.player_lose(bet)
+                        game_active = False
+                elif player_choice == 2:
+                    break
+                else:
+                    print("Invalid input, please try again")
+                    print(player_cards)
+                    print(player_hand_value)
+                    continue
+            except ValueError:
+                print("Invalid input, please try again")
+
+        #Dealer's turn to hit or stand
+        while game_active:
+            if dealer_hand_value < 17:
+                dealer_cards.append(self.deal_a_card(deck))
+                print(dealer_cards)
+                dealer_hand_value = self.calculate_hand_total(dealer_cards)
+                print(dealer_hand_value)
+            elif dealer_hand_value > 21:
+                player.player_win(bet)
+                game_active = False
+            else:
+                break
+
+        # Checks both hand values to determine the winner
+        if game_active:
+            if player_hand_value > dealer_hand_value and player_hand_value <= 21:
+                player.player_win(bet)
+            elif player_hand_value < dealer_hand_value :
+                player.player_lose(bet)
+            else:
+                player.player_tie(bet)
