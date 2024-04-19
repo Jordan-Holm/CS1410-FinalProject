@@ -21,15 +21,9 @@ class Player(Screen):
     def get_cur_bet(self):
         return self.cur_bet
 
-    def set_cur_bet(self):
-        while True:
-            try:
-                bet = float(input("Place your bet: "))
-                if bet > 0 and bet <= self.money:
-                    self.cur_bet = bet
-                    break
-            except ValueError:
-                print("Bet must be a valid number")
+    def set_cur_bet(self, bet):
+        self.cur_bet = bet
+
 
     def _keydown(self, *args):
         print(f"Key down {args[3]}")

@@ -14,7 +14,7 @@ from kivy.uix.button import Button
 class MainMenuScreen(Screen):
     def on_enter(self, *args):
         super().on_enter(*args)
-        game_list = [BlackJackScreen(), SlotScreen()]
+        game_list = [BlackJackScreen(), SlotScreen(), BlackJackScreen(), SlotScreen() ]
         print(game_list)
         game_table = self.ids.gametable
         game_table.clear_widgets()
@@ -31,8 +31,8 @@ class CasinoGame(Widget):
 
 class CasinoApp(App):
     def build(self):
-        casino = SystemManager(transition=NoTransition())
-        casino.current = "CreatePlayer"
+        casino = SystemManager()
+        casino.current = "MainMenu"
 
         return casino
 

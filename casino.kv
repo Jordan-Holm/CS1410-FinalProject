@@ -6,7 +6,8 @@
         Rectangle:
             pos: self.pos
             size: self.size
-    font_size: 25
+    font_size: 30
+
 <SystemManager>
     Player:
         name: "CreatePlayer"
@@ -19,10 +20,10 @@
     BlackJackScreen:
         name: "BlackJack"
 
-<MainMenuScreen>
+<BlackJackScreen>
     canvas.before:
         Color:
-            rgba: 0,1,1,1
+            rgba: 1,1,1,1
         Rectangle:
             pos: self.pos
             size: self.size
@@ -34,18 +35,98 @@
         BoxLayout:
             Label:
                 size_hint_x: 1
-                text: "PJ'S Casino"
+                font_size: 150
+                text: "BlackJack"
         BoxLayout:
             orientation: "vertical"
             GridLayout:
                 cols: 2
+                id: player_dealer_hands
+                size_hint_y: 9
+                padding: 15
+                spacing: 30
+                Label:
+                    size_hint_x: 1
+                    text: "Player"
+                Label:
+                    size_hint_x: 1
+                    text: "Dealer"
+        BoxLayout:
+            orientation: "vertical"
+            GridLayout:
+                cols: 2
+                id: button_grid
+                padding: 15
+                spacing: 25
+                Button:
+                    size_hint_y: 1
+                    text: "Hit"
+                Button:
+                    size_hint_y: 1
+                    text: "Stand"
+                    
+<PlaceBetScreen>
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: 50
+        spacing: 20
+        BoxLayout:
+            Label:
+                size_hint_x: 1
+                font_size: 150
+                text: "Place Bet"
+        BoxLayout:
+            TextInput:
+                size_hint_x: 1.5
+                id: bet_input
+                text: ""
+
+<MainMenuScreen>
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: 50
+        spacing: 20
+        BoxLayout:
+            Label:
+                size_hint_x: 1
+                font_size: 150
+                text: "PJ'S"
+        BoxLayout:
+            Label:
+                canvas.before:
+                    Color:
+                        rgba: 1,1,1,1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                text: "$"
+                color: 11/255, 184/255, 6/255, 1
+        BoxLayout:
+            orientation: "vertical"
+            GridLayout:
+                cols: 1
                 id: gametable
                 size_hint_y: 9
+                padding: 15
+                spacing: 30
                 Button:
                     size_hint_y: 1
                     text: "Play Game"
                     on_press: root.go_to_add()
-
 
 <Player>
     canvas.before:
