@@ -80,13 +80,22 @@
         BoxLayout:
             Label:
                 size_hint_x: 1
-                font_size: 150
-                text: "Place Bet"
+                font_size: 125
+                text: "Enter Your Bet"
         BoxLayout:
             TextInput:
                 size_hint_x: 1.5
                 id: bet_input
                 text: ""
+
+        Button:
+            size_hint_y: 1
+            background_normal: ''
+            background_color: (252/255, 3/255, 78/255, 1)
+            disabled: True
+            id: enter_bet_button
+            font_size: 45
+            text: "Place Bet"
 
 <MainMenuScreen>
     canvas.before:
@@ -125,8 +134,16 @@
                 spacing: 30
                 Button:
                     size_hint_y: 1
-                    text: "Play Game"
-                    on_press: root.go_to_add()
+                    text: "BlackJack"
+                Button:
+                    size_hint_y: 1
+                    text: "Slot Machine"
+                Button:
+                    size_hint_y: 1
+                    text: "Coin Flip"
+                Button:
+                    size_hint_y: 1
+                    text: "Exit"
 
 <Player>
     canvas.before:

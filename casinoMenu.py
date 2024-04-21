@@ -21,6 +21,9 @@ class MainMenuScreen(Screen):
 
         for game in game_list:
             game_button = Button(text=game.game_name, font_size = 30)
+            game_button.id = game.game_name
+            player = App.get_running_app().root.get_screen("CreatePlayer")
+            game_button.bind(on_press = PlaceBetScreen.place_bet(player, game_button.id))
             game_table.add_widget(game_button)
 
 class SystemManager(ScreenManager):
@@ -32,7 +35,7 @@ class CasinoGame(Widget):
 class CasinoApp(App):
     def build(self):
         casino = SystemManager()
-        casino.current = "MainMenu"
+        casino.current = "CreatePlayer"
 
         return casino
 
