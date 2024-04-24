@@ -16,14 +16,13 @@ class Player(Screen):
 
     def show_money(self):
         '''Displays the class object current money amount. Formated to 2 decimal places'''
-        print(f"${self.money:.2f}")
+        return f"${self.money:.2f}"
 
     def get_cur_bet(self):
         return self.cur_bet
 
     def set_cur_bet(self, bet):
         self.cur_bet = bet
-
 
     def _keydown(self, *args):
         print(f"Key down {args[3]}")
@@ -36,7 +35,9 @@ class Player(Screen):
             create_player.disabled = False
 
     def on_click(self):
-        self.name = self.ids.name_input.text
+        player_instance = App.get_running_app().root.player_instance
+        player_instance.name = self.ids.name_input.text
+        print(player_instance)
         App.get_running_app().root.current = "MainMenu"
 
     def player_win(self, bet, modifier=1):
