@@ -3,6 +3,7 @@ from placebet import PlaceBetScreen
 from slotMachine import SlotScreen
 from blackJack import BlackJackScreen
 from coinFlip import CoinFlipScreen
+from outcomes import OutcomeScreen
 from Menu_Choices import menu_choices
 from kivy.app import App
 from kivy.uix.widget import Widget
@@ -31,7 +32,13 @@ class MainMenuScreen(Screen):
         for game in game_list:
             game_button = Button(text=game.game_name, font_size=30)
             game_button.id = game.game_name
+            game_button.bind(on_press=lambda btn, game_name=game.game_name: self.on_game_button_press(game_name))
             game_table.add_widget(game_button)
+
+    def on_game_button_press(self, game_name):
+        screen_manager = App.get_running_app().root
+        screen_manager.current = "PlaceBet"
+        screen_manager.get_screen("PlaceBet").selected_game = game_name
 
 class SystemManager(ScreenManager):
     def __init__(self, **kwargs):

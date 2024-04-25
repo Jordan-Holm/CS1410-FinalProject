@@ -18,7 +18,33 @@
     SlotScreen:
         name: "Slot"
     BlackJackScreen:
-        name: "BlackJack"
+        name: "Black Jack"
+    OutcomeScreen:
+        name: "Outcomes"
+
+<OutcomeScreen>:
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: 50
+        spacing: 20
+        GridLayout:
+            cols: 1
+            id: header
+        GridLayout:
+            cols: 1
+            id: bet_outcome
+        GridLayout:
+            cols: 1
+            Button:
+                text: "Return to Main Menu"
+                on_press: root.go_to_menu()  
 
 <BlackJackScreen>
     canvas.before:
@@ -45,25 +71,27 @@
                 size_hint_y: 9
                 padding: 15
                 spacing: 30
-                Label:
-                    size_hint_x: 1
-                    text: "Player"
-                Label:
-                    size_hint_x: 1
-                    text: "Dealer"
+                GridLayout:
+                    cols: 1
+                    id: player_hand
+                    size_hint_y: 9
+                    Label:
+                        size_hint_x: 1
+                        text: "Player"
+                GridLayout:
+                    cols: 1
+                    id: dealer_hand
+                    size_hint_y: 9
+                    Label:
+                        size_hint_x: 1
+                        text: "Dealer"
         BoxLayout:
             orientation: "vertical"
             GridLayout:
                 cols: 2
-                id: button_grid
+                id: buttontable
                 padding: 15
                 spacing: 25
-                Button:
-                    size_hint_y: 1
-                    text: "Hit"
-                Button:
-                    size_hint_y: 1
-                    text: "Stand"
                     
 <PlaceBetScreen>
     canvas.before:
@@ -80,7 +108,7 @@
         BoxLayout:
             Label:
                 size_hint_x: 1
-                font_size: 125
+                font_size: 100
                 text: "Enter Your Bet"
         BoxLayout:
             TextInput:
@@ -92,10 +120,10 @@
             size_hint_y: 1
             background_normal: ''
             background_color: (252/255, 3/255, 78/255, 1)
-            disabled: True
             id: enter_bet_button
             font_size: 45
             text: "Place Bet"
+            on_press: root.place_bet()
 
 <MainMenuScreen>
     canvas.before:

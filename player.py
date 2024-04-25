@@ -37,7 +37,6 @@ class Player(Screen):
     def on_click(self):
         player_instance = App.get_running_app().root.player_instance
         player_instance.name = self.ids.name_input.text
-        print(player_instance)
         App.get_running_app().root.current = "MainMenu"
 
     def player_win(self, bet, modifier=1):
