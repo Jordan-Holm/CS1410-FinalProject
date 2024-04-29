@@ -55,7 +55,7 @@ class OutcomeScreen(Screen):
             case "tie":
                 lost_label = Label(text="You Tied", font_size=50)
                 header.add_widget(lost_label)
-                bet_label = Label(text=f"tie ${self.player_instance.cur_bet} returned",color=(0, 0, 0, 1))
+                bet_label = Label(text=f"Your bet of ${self.player_instance.cur_bet} was returned",color=(0, 0, 0, 1))
                 with bet_label.canvas.before:
                     Color(1, 1, 1, 1)
                     self.rect = Rectangle(size=bet_label.size, pos=bet_label.pos)
