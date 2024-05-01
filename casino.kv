@@ -19,6 +19,8 @@
         name: "Slot"
     BlackJackScreen:
         name: "Black Jack"
+    CoinFlipScreen:
+        name: "Coin Flip"
     OutcomeScreen:
         name: "Outcomes"
 
@@ -212,3 +214,35 @@
             font_size: 45
             text: "Create Player"
             on_press: root.on_click()
+
+<CoinFlipScreen>
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: 50
+        spacing: 20
+        BoxLayout:
+            Label:
+                size_hint_x: 1
+                font_size: 100
+                text: "Heads or Tails?"
+        BoxLayout:
+            orientation: "vertical"
+            size: root.width, root.height
+            padding: 50
+            spacing: 20
+            GridLayout:
+                cols: 2
+                id: button_tablet
+                size_hint_y: 1
+                background_normal: ''
+                background_color: (252/255, 3/255, 78/255, 1)
+
+        
+

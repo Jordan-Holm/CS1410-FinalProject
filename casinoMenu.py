@@ -25,7 +25,7 @@ class MainMenuScreen(Screen):
         money_label = self.ids.moneylabel
         money_label.text = player_instance.__str__()
 
-        game_list = [BlackJackScreen(), SlotScreen()]
+        game_list = [BlackJackScreen(), SlotScreen(), CoinFlipScreen()]
         game_table = self.ids.gametable
         game_table.clear_widgets()
 
@@ -39,6 +39,7 @@ class MainMenuScreen(Screen):
         screen_manager = App.get_running_app().root
         screen_manager.current = "PlaceBet"
         screen_manager.get_screen("PlaceBet").selected_game = game_name
+
 
 class SystemManager(ScreenManager):
     def __init__(self, **kwargs):
