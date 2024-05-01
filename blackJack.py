@@ -157,7 +157,6 @@ class BlackJackScreen(Screen):
         else:
             self.go_to_outcomes('tie')
             
-    
     def go_to_outcomes(self, outcome):
         screen_manager = App.get_running_app().root
         screen_manager.current = "Outcomes"
