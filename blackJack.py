@@ -37,15 +37,19 @@ class BlackJackScreen(Screen):
 
         player_table = self.ids.player_hand
         player_table.clear_widgets()
+        player_name_label = Label(text="Player")
         player_card_label = Label(text=", ".join([f"{suit} {value}" for suit, value in self.player_cards]), font_size=12)
         player_handvalue_label = Label(text=str(self.player_hand_value))
+        player_table.add_widget(player_name_label)
         player_table.add_widget(player_card_label)
         player_table.add_widget(player_handvalue_label)
 
         dealer_table = self.ids.dealer_hand
         dealer_table.clear_widgets()
+        dealer_name_label = Label(text="Dealer")
         dealer_card_label = Label(text=", ".join([f"{suit} {value}" for suit, value in self.dealer_cards]), font_size=12)
         dealer_handvalue_label = Label(text=str(self.dealer_hand_value))
+        dealer_table.add_widget(dealer_name_label)
         dealer_table.add_widget(dealer_card_label)
         dealer_table.add_widget(dealer_handvalue_label)
 

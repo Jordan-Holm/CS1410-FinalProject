@@ -1,6 +1,5 @@
 from player import Player
 from placebet import PlaceBetScreen
-from slotMachine import SlotScreen
 from blackJack import BlackJackScreen
 from coinFlip import CoinFlipScreen
 from outcomes import OutcomeScreen
@@ -25,7 +24,7 @@ class MainMenuScreen(Screen):
         money_label = self.ids.moneylabel
         money_label.text = player_instance.__str__()
 
-        game_list = [BlackJackScreen(), SlotScreen(), CoinFlipScreen()]
+        game_list = [BlackJackScreen(), CoinFlipScreen()]
         game_table = self.ids.gametable
         game_table.clear_widgets()
 
